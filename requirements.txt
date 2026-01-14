@@ -1,0 +1,6 @@
+streamlit
+mcp
+google-genai
+python-dotenv
+requests
+contextual-client

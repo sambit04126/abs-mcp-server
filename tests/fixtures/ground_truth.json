@@ -1,0 +1,73 @@
+{
+  "q1_inflation": {
+    "question": "What is the current inflation rate?",
+    "dataset": "CPI",
+    "key": "3.10001.10.50.M",
+    "latest_value": 3.8,
+    "latest_period": "2025-10",
+    "full_obs": {
+      "value": 3.8,
+      "Measure": "Percentage change from previous year",
+      "Index": "All groups CPI",
+      "Adjustment Type": "Original",
+      "Region": "Australia",
+      "Frequency": "Monthly",
+      "Time Period": "2025-10"
+    }
+  },
+  "q2_unemployment": {
+    "question": "What is the current Australia unemployment rate?",
+    "dataset": "LF",
+    "key": "M13.3.1599.30.AUS.M",
+    "latest_value": 4.33939974,
+    "latest_period": "2025-11",
+    "full_obs": {
+      "value": 4.33939974,
+      "Measure": "Unemployment rate",
+      "Sex": "Persons",
+      "Age": "Total (age)",
+      "Adjustment Type": "Trend",
+      "Region": "Australia",
+      "Frequency": "Monthly",
+      "Time Period": "2025-11"
+    }
+  },
+  "q3_population": {
+    "error": "'expect_latest'"
+  },
+  "q4_cpi_sydney": {
+    "question": "What is the inflation rate in Sydney?",
+    "dataset": "CPI",
+    "key": "3.10001.10.1.M",
+    "latest_value": 3.6,
+    "latest_period": "2025-10",
+    "full_obs": {
+      "value": 3.6,
+      "Measure": "Percentage change from previous year",
+      "Index": "All groups CPI",
+      "Adjustment Type": "Original",
+      "Region": "Sydney",
+      "Frequency": "Monthly",
+      "Time Period": "2025-10"
+    }
+  },
+  "q5_fuel_price": {
+    "question": "What is the price index for Automotive Fuel?",
+    "dataset": "CPI",
+    "key": "1.40081.10.50.M",
+    "latest_value": 96.92,
+    "latest_period": "2023-05",
+    "full_obs": {
+      "value": 96.92,
+      "Measure": "Index numbers",
+      "Index": "Automotive fuel",
+      "Adjustment Type": "Original",
+      "Region": "Australia",
+      "Frequency": "Monthly",
+      "Time Period": "2023-05"
+    }
+  },
+  "q6_retail_vic": {
+    "error": "No data"
+  }
+}

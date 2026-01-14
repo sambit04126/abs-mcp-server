@@ -1,16 +1,81 @@
 [project]
-name = "mcp-abs-dataset"
-version = "0.1.0"
-description = "MCP server for Australian Bureau of Statistics datasets"
-authors = ["Your Name <your.email@example.com>"]
-license = "MIT"
+name = "abs-mcp-server"
+version = "1.0.0"
+description = "Model Context Protocol server for Australian Bureau of Statistics data with AI-powered natural language queries"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "ABS MCP Contributors" }
+]
+keywords = [
+    "abs", "australian-bureau-of-statistics", "mcp", "model-context-protocol",
+    "sdmx", "statistics", "data-api", "gemini", "ai-agent"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "mcp>=1.0.0",
+    "requests>=2.31.0",
+    "streamlit>=1.32.0",
+    "openai>=1.12.0",
+    "python-dotenv>=1.0.1",
+    "google-genai>=1.57.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/abs-mcp-server"
+Documentation = "https://github.com/yourusername/abs-mcp-server/blob/main/README.md"
+Repository = "https://github.com/yourusername/abs-mcp-server"
+Issues = "https://github.com/yourusername/abs-mcp-server/issues"
+"ABS Data Portal" = "https://www.abs.gov.au"
+
+[[project.authors]]
+name = "Sambit Choudhury"
+email = "sambit04126@gmail.com"
 
 [tool.black]
 line-length = 88
 target-version = ['py38']
 
 [tool.mypy]
-python_version = "3.8"
-strict = true
+python_version = "3.11"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "mcp.*"
+ignore_missing_imports = true
+
+
+
+[project.scripts]
+abs-mcp-server = "abs_mcp_server.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "pytest>=7.0.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+    "types-requests>=2.32.0.20241016",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/abs_mcp_server"]

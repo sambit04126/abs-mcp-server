@@ -62,12 +62,17 @@ fi
 
 # Validation
 if [ -n "$API_KEY" ]; then
+    # Show first 4 chars for verification, mask the rest
+    MASKED_KEY="${API_KEY:0:4}..."
+    echo "✅ Success: GOOGLE_API_KEY found ($MASKED_KEY)"
     ENV_FLAGS="--set-env-vars GOOGLE_API_KEY=$API_KEY"
 else
-    echo "❌ Error: GOOGLE_API_KEY is missing."
-    echo "You must either:"
-    echo "  1. Export it in your shell: export GOOGLE_API_KEY=..."
-    echo "  2. Or add it to a '.env' file: GOOGLE_API_KEY=..."
+    echo "❌ CRITICAL ERROR: GOOGLE_API_KEY is missing."
+    echo "Deployment aborted because the app cannot function without this key."
+    echo ""
+    echo "To fix this, please either:"
+    echo "  1. Run: export GOOGLE_API_KEY='your_key_here'"
+    echo "  2. Or edit the '.env' file and add: GOOGLE_API_KEY=your_key_here"
     exit 1
 fi
 

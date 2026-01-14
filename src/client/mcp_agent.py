@@ -315,9 +315,15 @@ ANSWER FORMAT:
                         response = await chat.send_message(parts_to_send_back)
                         
                         # Log the subsequent response
+                        fcs_log = []
+                        if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
+                            for part in response.candidates[0].content.parts:
+                                if part.function_call:
+                                    fcs_log.append({"name": part.function_call.name, "args": part.function_call.args})
+                        
                         self._log_event("gemini_response_after_tool", {
-                            "text": response.text, 
-                            "function_calls": [{"name": fc.name, "args": fc.args} for part in response.candidates[0].content.parts for fc in [part.function_call] if fc] if response.candidates else []
+                            "text": response.text if response.candidates else "", 
+                            "function_calls": fcs_log
                         })
 
                     # Final response

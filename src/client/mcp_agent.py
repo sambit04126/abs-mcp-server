@@ -336,6 +336,17 @@ ANSWER FORMAT:
                              reason = "Unknown"
                              if response.candidates and response.candidates[0].finish_reason:
                                  reason = str(response.candidates[0].finish_reason)
+                             
+                             if "MALFORMED_FUNCTION_CALL" in reason:
+                                 yield ("log", "⚠️ Model made a malformed call. Asking it to summarize what it has so far...")
+                                 # Self-correction: ask the model to stop trying to use tools and just answer
+                                 correction_prompt = "You made a malformed tool call. Please STOP calling tools. Just summarize the data you have collected so far into a final answer."
+                                 response = await chat.send_message(correction_prompt)
+                                 if response.text:
+                                     yield ("answer", response.text)
+                                     self._log_event("final_answer_recovered", {"text": response.text})
+                                     return
+                                     
                              yield ("answer", f"⚠️ No text generated. (Finish Reason: {reason})")
                     except Exception as e:
                         reason = "Unknown"

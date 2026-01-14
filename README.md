@@ -8,16 +8,44 @@
 
 ```bash
 # Clone and install
-git clone https://github.com/yourusername/abs-mcp-server
+git clone https://github.com/sambit04126/abs-mcp-server.git
 cd abs-mcp-server
 pip install -e .
 
 # Configure API key
 cp .env.template .env
 # Edit .env and add your GOOGLE_API_KEY
+# (Note: For Claude Desktop, API keys are handled differently, see below)
 
 # Run Streamlit UI
 streamlit run src/client/app.py
+```
+
+## 🔌 Connecting to Claude Desktop (Standard MCP)
+
+This server adheres to the Model Context Protocol (MCP) and can be used directly with Claude Desktop.
+
+1.  **Install the package** (as above).
+2.  **Edit your config**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+3.  **Add the server**:
+
+```json
+{
+  "mcpServers": {
+    "abs-data": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/ABSOLUTE/PATH/TO/abs-mcp-server",
+        "run",
+        "abs-mcp-server"
+      ],
+      "env": {
+        "GOOGLE_API_KEY": "your-key-here"
+      }
+    }
+  }
+}
 ```
 
 ## ✨ Features

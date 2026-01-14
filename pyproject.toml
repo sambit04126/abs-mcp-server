@@ -33,10 +33,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/abs-mcp-server"
-Documentation = "https://github.com/yourusername/abs-mcp-server/blob/main/README.md"
-Repository = "https://github.com/yourusername/abs-mcp-server"
-Issues = "https://github.com/yourusername/abs-mcp-server/issues"
+Homepage = "https://github.com/sambit04126/abs-mcp-server"
+Documentation = "https://github.com/sambit04126/abs-mcp-server/blob/main/README.md"
+Repository = "https://github.com/sambit04126/abs-mcp-server"
+Issues = "https://github.com/sambit04126/abs-mcp-server/issues"
 "ABS Data Portal" = "https://www.abs.gov.au"
 
 [[project.authors]]

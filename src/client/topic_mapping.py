@@ -246,7 +246,20 @@ TOPIC_TO_DATASET = {
         "dataset_id": "BIRTHS_SUMMARY",
         "description": "Registered births summary by state",
         "common_dimensions": {
-            "MEASURE": "1"  # Births
+            "MEASURE": "1",      # Births
+            "ASGS_2011": "0",    # Australia (Default) - use 1 for NSW, 2 for VIC etc.
+            "FREQ": "A"          # Annual
+        },
+        "regional_codes": {
+            "nsw": "1",
+            "vic": "2",
+            "qld": "3",
+            "sa": "4",
+            "wa": "5",
+            "tas": "6",
+            "nt": "7",
+            "act": "8",
+            "australia": "0"
         }
     },
     "deaths": {

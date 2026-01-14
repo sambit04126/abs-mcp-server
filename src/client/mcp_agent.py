@@ -38,7 +38,7 @@ class MCPAgent:
             if dims:
                 kb_str += f"  Default dimensions: {dims}\n"
             if info.get("regional_codes"):
-                kb_str += f"  Regional codes: {list(info['regional_codes'].keys())}\n"
+                kb_str += f"  Regional codes: {json.dumps(info['regional_codes'])}\n"
         
         self.system_instruction = f"""You are an expert assistant for querying Australian Bureau of Statistics (ABS) data.
 

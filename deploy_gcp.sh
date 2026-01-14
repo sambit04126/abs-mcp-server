@@ -49,26 +49,25 @@ gcloud builds submit --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME" --project "$PROJEC
 echo "🚀 Deploying to Cloud Run..."
 
 # Check env file
-# Check env file
+# Check env for API Key (Order: Shell Env -> .env file)
+API_KEY="$GOOGLE_API_KEY"
 ENV_FLAGS=""
-SECRETS_FILE=".env"
 
-if [ -f "$SECRETS_FILE" ]; then
-    echo "📄 Found secrets file: $SECRETS_FILE"
-    # Extract API Key robustly (handling potential comments or empty lines)
-    API_KEY=$(grep "^GOOGLE_API_KEY=" "$SECRETS_FILE" | cut -d '=' -f2-)
-    
-    if [ -n "$API_KEY" ]; then
-        echo "✅ Loaded GOOGLE_API_KEY from $SECRETS_FILE"
-        ENV_FLAGS="--set-env-vars GOOGLE_API_KEY=$API_KEY"
-    else
-        echo "⚠️  GOOGLE_API_KEY not found in $SECRETS_FILE"
-        echo "Please add: GOOGLE_API_KEY=your-actual-key-here"
-        exit 1
-    fi
+if [ -n "$API_KEY" ]; then
+    echo "✅ Found GOOGLE_API_KEY in current shell environment."
+elif [ -f ".env" ]; then
+    echo "📄 Found .env file, reading key..."
+    API_KEY=$(grep "^GOOGLE_API_KEY=" .env | cut -d '=' -f2-)
+fi
+
+# Validation
+if [ -n "$API_KEY" ]; then
+    ENV_FLAGS="--set-env-vars GOOGLE_API_KEY=$API_KEY"
 else
-    echo "❌ Error: $SECRETS_FILE not found."
-    echo "Please create a '$SECRETS_FILE' file with your GOOGLE_API_KEY="
+    echo "❌ Error: GOOGLE_API_KEY is missing."
+    echo "You must either:"
+    echo "  1. Export it in your shell: export GOOGLE_API_KEY=..."
+    echo "  2. Or add it to a '.env' file: GOOGLE_API_KEY=..."
     exit 1
 fi
 

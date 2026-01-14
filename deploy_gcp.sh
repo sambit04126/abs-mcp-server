@@ -43,7 +43,7 @@ gcloud services enable run.googleapis.com containerregistry.googleapis.com --pro
 # Build and Submit to Cloud Build (easiest way to get image in registry)
 # Alternatively, we could build locally and push, but Cloud Build does it all in cloud.
 echo "🔨 Building and pushing container image (using Cloud Build)..."
-gcloud builds submit --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME" .
+gcloud builds submit --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME" --project "$PROJECT_ID" .
 
 # Deploy to Cloud Run
 echo "🚀 Deploying to Cloud Run..."

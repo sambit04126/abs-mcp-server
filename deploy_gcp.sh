@@ -49,21 +49,27 @@ gcloud builds submit --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME" --project "$PROJEC
 echo "🚀 Deploying to Cloud Run..."
 
 # Check env file
+# Check env file
 ENV_FLAGS=""
-if [ -f .env ]; then
-    echo "📄 Found .env file, including as environment variables..."
-    # Convert .env to comma-separated list for --set-env-vars (excluding comments/blanks)
-    # WARNING: This simple parse might be fragile with complex values.
-    # Cloud Run supports --env-vars-file in YAML, but CLI usage is tricky with .env
-    # Safer to pass secrets properly, but for this simpler setup, we'll assume GOOGLE_API_KEY is main one.
+SECRETS_FILE=".env"
+
+if [ -f "$SECRETS_FILE" ]; then
+    echo "📄 Found secrets file: $SECRETS_FILE"
+    # Extract API Key robustly (handling potential comments or empty lines)
+    API_KEY=$(grep "^GOOGLE_API_KEY=" "$SECRETS_FILE" | cut -d '=' -f2-)
     
-    # Let's just explicitly look for GOOGLE_API_KEY
-    API_KEY=$(grep GOOGLE_API_KEY .env | cut -d '=' -f2)
     if [ -n "$API_KEY" ]; then
+        echo "✅ Loaded GOOGLE_API_KEY from $SECRETS_FILE"
         ENV_FLAGS="--set-env-vars GOOGLE_API_KEY=$API_KEY"
+    else
+        echo "⚠️  GOOGLE_API_KEY not found in $SECRETS_FILE"
+        echo "Please add: GOOGLE_API_KEY=your-actual-key-here"
+        exit 1
     fi
 else
-    echo "⚠️  .env file not found. deployment might fail if API key is missing."
+    echo "❌ Error: $SECRETS_FILE not found."
+    echo "Please create a '$SECRETS_FILE' file with your GOOGLE_API_KEY="
+    exit 1
 fi
 
 gcloud run deploy "$SERVICE_NAME" \
